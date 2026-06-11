@@ -86,7 +86,7 @@ wp option update page_for_posts "$UUDISED_ID"
 
 # Create navigation menu
 wp menu create "Peamine navigatsioon"
-MENU_ID=$(wp menu list --field=term_id | head -1)
+MENU_ID=$(wp menu list --format=ids | awk '{print $1}')
 
 wp menu item add-post "$MENU_ID" "$ESILEHT_ID" --title="Avaleht"
 wp menu item add-post "$MENU_ID" "$UUDISED_ID" --title="Uudised"
