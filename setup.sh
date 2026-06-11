@@ -3,9 +3,9 @@ set -e
 
 echo "=== Tark Käsi OÜ WordPress setup ==="
 
-# Wait for database and WordPress to be ready
+# Wait for DB using PHP-based check (avoids mariadb-client SSL issues)
 echo "Waiting for database..."
-until wp db check 2>/dev/null; do
+until wp eval "echo 'db ok';" 2>/dev/null; do
   sleep 3
 done
 echo "Database ready."
