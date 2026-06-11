@@ -8,7 +8,7 @@
 
 ## CMS-i valik
 
-Valisin **WordPressi**, kuna see on maailma enimkasutatav CMS, millel on ulatuslik pistikprogrammide ökosüsteem (nt ACF kohandatud väljade jaoks) ning suur kogukond ja dokumentatsioon. WordPress sobib väikeettevõtte kodulehele hästi: haldusliidesesse sisenemine on intuitiivne, teemade kohandamine paindlik ja kohandatud sisutüüpide (CPT) loomine koos ACF-iga kiire. Lisaks on juhendis just WordPressi kasutajale lisapunktide saamise võimalus CPT + ACF eest.
+Valisin **WordPressi**, kuna see on maailma enimkasutatav CMS, millel on palju pistikprogramme.
 
 ---
 

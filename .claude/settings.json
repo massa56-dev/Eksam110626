@@ -6,6 +6,9 @@
       "Bash(Get-Command wp *)",
       "Bash(Test-Path \"C:\\\\Program Files\\\\Local\" -ErrorAction SilentlyContinue)",
       "Read(//c/Program Files/**)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\MarekMaasikmets\\Documents\\Claude\\Projects\\Sisuhalduss�steemid\\Eksam110626\\themes"
     ]
   }
 }
