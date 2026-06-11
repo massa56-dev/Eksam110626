@@ -3,9 +3,16 @@ set -e
 
 echo "=== Tark Käsi OÜ WordPress setup ==="
 
-# Wait for DB using PHP-based check (avoids mariadb-client SSL issues)
+# Wait for DB: use php to test connection directly (avoids mariadb SSL issue)
 echo "Waiting for database..."
-until wp eval "echo 'db ok';" 2>/dev/null; do
+until php -r "
+  \$h = getenv('WORDPRESS_DB_HOST') ?: 'db';
+  \$u = getenv('WORDPRESS_DB_USER') ?: 'wordpress';
+  \$p = getenv('WORDPRESS_DB_PASSWORD') ?: 'wordpress';
+  \$d = getenv('WORDPRESS_DB_NAME') ?: 'wordpress';
+  \$c = @mysqli_connect(\$h, \$u, \$p, \$d);
+  if (\$c) { echo 'ok'; exit(0); } exit(1);
+" 2>/dev/null; do
   sleep 3
 done
 echo "Database ready."
