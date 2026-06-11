@@ -1,0 +1,56 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./themes/tark-kasi:/var/www/html/wp-content/themes/tark-kasi
+      - ./plugins/tark-kasi-cpt:/var/www/html/wp-content/plugins/tark-kasi-cpt
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+
+  wpcli:
+    image: wordpress:cli
+    user: "33:33"
+    depends_on:
+      - wordpress
+      - db
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./themes/tark-kasi:/var/www/html/wp-content/themes/tark-kasi
+      - ./plugins/tark-kasi-cpt:/var/www/html/wp-content/plugins/tark-kasi-cpt
+      - ./setup.sh:/setup.sh
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+
+volumes:
+  db_data:
+  wordpress_data:
